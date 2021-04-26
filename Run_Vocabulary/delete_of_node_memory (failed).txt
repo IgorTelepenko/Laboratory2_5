@@ -1,0 +1,54 @@
+void help_delete_node_with_coord(vocab_tree* start_node, int right_coord, int left_coord)
+{
+    vocab_tree* current_node = start_node;
+    vocab_tree* found_node;
+
+	if(left_coord == 0)
+	{
+		if(right_coord == 0)
+		{
+            found_node = start_node;
+            if (current_node->left == NULL && current_node->right != NULL)
+                start_node = start_node->right;
+            if (current_node->left != NULL && current_node->right == NULL)
+            {
+                start_node = start_node->left;
+            }
+        }
+        else
+        {
+            for (int i = 0;i <= right_coord - 2;i++)
+            {
+                current_node = current_node->right;
+            }
+            found_node = current_node->right;
+            if (current_node->right->left)
+            {
+                current_node->right->left->right = current_node->right->right;
+                current_node->right = current_node->right->left;
+            }
+            else
+            {
+	            if(current_node->right->right)
+	            {
+                    current_node->right = current_node->right->right;
+	            }
+            
+            }
+        }
+	}
+    else
+    {
+        for (int i = 0;i <= right_coord - 1;i++)
+        {
+            current_node = current_node->right;
+        }
+    	for(int j=0;j<=left_coord-2;j++)
+    	{
+            current_node = current_node->left;
+    	}
+        found_node = current_node->left;
+        current_node->left = current_node->left->left;
+    }
+    delete found_node;
+}
